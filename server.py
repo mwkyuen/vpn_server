@@ -14,7 +14,10 @@ def main(rloc):
 
     with open('server.json') as json_file:
         data = json.load(json_file)
+        flag = []
+
         for dat in data:
+            flag.append(dat['flag'])
             if (dat['flag'] == rloc):
                 rlatlon = get_latlon(dat['location'])
                 curr_dist = get_dist(CURR_LOC, rlatlon)
@@ -25,6 +28,7 @@ def main(rloc):
 
         if (best_dat['load'] == 100):
             print("WARNING: Country code used is likely wrong, please confirm")
+            print(set(flag))
             print('Minimum distance (km) from VPN server to CURR_LOC = {:f}'.format(min_dist))
             print('Server load: {:d}'.format(best_dat['load']))
             print('Suggested server: {:s}'.format(best_dat['domain']))
